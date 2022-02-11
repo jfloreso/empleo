@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class EmployeeController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,7 @@ class EmployeeController extends Controller
         //
         $data = Employee::all();
         return $data;
+       // return view('empleados', compact('data'));
     }
 
     /**
@@ -28,6 +33,7 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        return view('create');
     }
 
     /**
@@ -36,9 +42,52 @@ class EmployeeController extends Controller
      * @param  \App\Http\Requests\StoreEmployeeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEmployeeRequest $request)
+    // public function store(StoreEmployeeRequest $request)
+    public function store(Request $request)
+
     {
+
         //
+        // $request->validate([
+        // 'name' => 'required',
+        // 'email' => 'required',
+        // 'jobposition' => 'required',
+        // 'datebirth' => 'required',
+        // 'address' => 'required'
+        // ]);
+
+
+        // $employee= new Employee;
+        // $employee->save($data);
+        // dd( $employee);
+        // $employeeskills=$employee['skills'];
+        // // $data=$request->all();
+        // //     $result=Employee::create($data);
+        // //     return redirect()->route('empleados');
+
+
+             try {
+             DB::beginTransaction();
+            $data=$request->all();
+            $result=Employee::create($data);
+
+
+            DB::commit();
+            return redirect()->route('empleados')
+            ->with('success', 'Empleado creado exitosamente.');
+             //$employee_id = $result->id;
+
+            //  if ($audit['catalogAuditor']){$audits->auditor()->createMany($auditor2);}
+            //  if ($audit['represent']){$audits->represent()->createMany($represent2);}
+            //  if ($audit['acknowledgmentmanager_id']){$audits->acknowled()->createMany($acknowledgment);}
+
+
+         }catch (\Exception $e) {
+             DB::rollBack();
+             return redirect()->back()->with('error', $e);
+
+         }
+
     }
 
     /**
@@ -47,9 +96,18 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show(Request $request, Employee $employee)
     {
-        //
+        $employee_id=$employee['id'];
+        $data = Employee::find($employee_id);
+        return $data;
+
+    }
+    public function mostrar(Request $request, Employee $employee)
+    {
+        $employee_id=$employee['id'];
+        $data = Employee::find($employee_id);
+        return view('show', compact('data'));
     }
 
     /**
@@ -60,7 +118,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+
+        return view('edit', compact('employee'));
     }
 
     /**
@@ -84,5 +143,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         //
+
+        dd("Llegando a Destroy");
     }
 }

@@ -7,12 +7,12 @@
                 <h2>Edit Product</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('projects.index') }}" title="Go back"> <i class="fas fa-backward "></i> </a>
+                <a class="btn btn-primary" href="{{ route('empleados') }}" title="Go back"> <i class="fas fa-backward "></i> </a>
             </div>
         </div>
     </div>
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
@@ -21,38 +21,38 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
-    <form action="{{ route('projects.update', $project->id) }}" method="POST">
+    <form action="{{ route('employees.update', $employee->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $project->name }}" class="form-control" placeholder="Name">
+                    <strong>Nombre:</strong>
+                    <input type="text" name="name" value="{{ $employee->name }}" class="form-control" placeholder="Name" required>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Introduction:</strong>
-                    <textarea class="form-control" style="height:50px" name="introduction"
-                        placeholder="Introduction">{{ $project->introduction }}</textarea>
+                    <strong>email:</strong>
+                    <textarea class="form-control" style="height:50px" name="email"
+                        placeholder="email" required>{{ $employee->email }}</textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Location:</strong>
-                    <input type="text" name="location" class="form-control" placeholder="{{ $project->location }}"
-                        value="{{ $project->location }}">
+                    <strong>Puesto:</strong>
+                    <input type="text" name="jobposition" class="form-control" placeholder="{{ $employee->jobposition }}"
+                        value="{{ $employee->jobposition }}" required>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Cost:</strong>
-                    <input type="number" name="cost" class="form-control" placeholder="{{ $project->cost }}"
-                        value="{{ $project->location }}">
+                    <strong>Fecha de Nac.:</strong>
+                    <input type="date" name="datebirth" class="form-control" placeholder="{{ $employee->datebirth }}"
+                        value="{{ $employee->datebirth }}" required>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

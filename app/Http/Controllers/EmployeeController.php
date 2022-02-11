@@ -118,6 +118,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        $employee_id=$employee['id'];
+        $employee = Employee::find($employee_id);
 
         return view('edit', compact('employee'));
     }
@@ -129,9 +131,21 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    // public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(Request $request, Employee $employee)
+
     {
         //
+        // $request->validate([
+        //     'name' => 'required',
+        //     'introduction' => 'required',
+        //     'location' => 'required',
+        //     'cost' => 'required'
+        // ]);
+        $employee->update($request->all());
+
+        return redirect()->route('empleados')
+        ->with('success', 'Empleado creado exitosamente.');
     }
 
     /**

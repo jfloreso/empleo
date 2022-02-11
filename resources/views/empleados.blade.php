@@ -30,7 +30,7 @@
         </tr>
         @foreach ($data as $project)
             <tr>
-                <td>{{  $project->id }}</td>
+                <td>{{ $project->id }}</td>
                 <td>{{ $project->name }}</td>
                 <td>{{ $project->email }}</td>
                 <td>{{ $project->jobposition }}</td>

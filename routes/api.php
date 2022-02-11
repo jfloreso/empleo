@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   })->name('create');
 
   Route::get('destroy', 'App\Http\Controllers\EmployeeController@destroy')->name('destroy');
-  Route::get('edit', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
+  Route::get('edit/{employee}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
   Route::get('mostrar/{employee}', 'App\Http\Controllers\EmployeeController@mostrar')->name('mostrar');
 
 

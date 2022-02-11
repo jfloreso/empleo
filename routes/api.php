@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
       return view ('create');
   })->name('create');
 
-  Route::get('destroy', 'App\Http\Controllers\EmployeeController@destroy')->name('destroy');
+  Route::delete('destroy/{employee}', 'App\Http\Controllers\EmployeeController@destroy')->name('destroy');
   Route::get('edit/{employee}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
   Route::get('mostrar/{employee}', 'App\Http\Controllers\EmployeeController@mostrar')->name('mostrar');
 

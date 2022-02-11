@@ -144,8 +144,7 @@ class EmployeeController extends Controller
         // ]);
         $employee->update($request->all());
 
-        return redirect()->route('empleados')
-        ->with('success', 'Empleado creado exitosamente.');
+        return redirect()->route('empleados')->with('success', 'Empleado creado exitosamente.');
     }
 
     /**
@@ -157,7 +156,12 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         //
+        $employee_id=$employee['id'];
+        $employee = Employee::find($employee_id)->delete();
+        return redirect()->route('empleados')->with('success', 'Empleado borrado exitosamente.');
 
-        dd("Llegando a Destroy");
+
+
+
     }
 }

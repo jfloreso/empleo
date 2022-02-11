@@ -22,7 +22,9 @@
             </ul>
         </div>
     @endif --}}
+
     <form action="{{ route('employees.store') }}" method="POST" >
+
         @csrf
 
         <div class="row">
@@ -55,6 +57,23 @@
                 <div class="form-group">
                     <strong>Dirección:</strong>
                     <input type="text" name="address" class="form-control" placeholder="Dirección" >
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Habilidad:</strong>
+                    <input type="text" name="skills[name]" class="form-control" placeholder="Habilidad" required >
+                </div>
+                <div class="form-group">
+                    <strong>Nivel de Habilidad:</strong>
+                    <select name="skills[level]" id="level" required >
+                        <option value="">--- Seleccione el nivel de Habilidad ---</option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                    </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -22,10 +22,12 @@
     <table class="table table-bordered table-responsive-lg">
         <tr>
             <th>No</th>
-            <th>Name</th>
+            <th>Nombre</th>
+            <th>Puesto</th>
             <th>Correo</th>
             <th>Fecha Nac</th>
             <th>Dirección</th>
+            <th>Habilidades/Nivel</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($data as $project)
@@ -34,9 +36,16 @@
                 <td>{{ $project->name }}</td>
                 <td>{{ $project->email }}</td>
                 <td>{{ $project->jobposition }}</td>
-                <td>{{ $project->datebirth }}</td>
+                <td> {{ date('d-m-Y', strtotime($project->datebirth))}}</td>
                 <td>{{ $project->address }}</td>
-                <td>{{ date_format($project->created_at, 'jS M Y') }}</td>
+                <td>
+                @foreach ($project->skills as $skill)
+                <li>{{ $skill->name}}/{{$skill->level}}</li>
+                @endforeach
+
+                </td>
+
+
                 <td>
                     <form action="{{ route('destroy', $project->id) }}" method="POST">
 

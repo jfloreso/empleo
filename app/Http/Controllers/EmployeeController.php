@@ -22,7 +22,7 @@ class EmployeeController extends Controller
         //
         $data = Employee::all();
         return $data;
-       // return view('empleados', compact('data'));
+        // return view('empleados', compact('data'));
     }
 
     /**
@@ -47,47 +47,28 @@ class EmployeeController extends Controller
 
     {
 
-        //
-        // $request->validate([
-        // 'name' => 'required',
-        // 'email' => 'required',
-        // 'jobposition' => 'required',
-        // 'datebirth' => 'required',
-        // 'address' => 'required'
-        // ]);
-
-
-        // $employee= new Employee;
-        // $employee->save($data);
-        // dd( $employee);
-        // $employeeskills=$employee['skills'];
-        // // $data=$request->all();
-        // //     $result=Employee::create($data);
-        // //     return redirect()->route('empleados');
-
-
-             try {
-             DB::beginTransaction();
-            $data=$request->all();
-            $result=Employee::create($data);
-
+        $datos = $request->all();
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $result = Employee::create($data);
+            $employee_id = $result->id;
+            if ($datos['skills']) {
+                $skill = [];
+                $contador = 0;
+                $skill[$contador]['employee_id'] = $employee_id;
+                $skill[$contador]['name'] = $datos['skills']['name'];
+                $skill[$contador]['level'] = $datos['skills']['level'];
+                $result->skills()->createMany($skill);
+            }
 
             DB::commit();
             return redirect()->route('empleados')
-            ->with('success', 'Empleado creado exitosamente.');
-             //$employee_id = $result->id;
-
-            //  if ($audit['catalogAuditor']){$audits->auditor()->createMany($auditor2);}
-            //  if ($audit['represent']){$audits->represent()->createMany($represent2);}
-            //  if ($audit['acknowledgmentmanager_id']){$audits->acknowled()->createMany($acknowledgment);}
-
-
-         }catch (\Exception $e) {
-             DB::rollBack();
-             return redirect()->back()->with('error', $e);
-
-         }
-
+                ->with('success', 'Empleado creado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e);
+        }
     }
 
     /**
@@ -98,14 +79,13 @@ class EmployeeController extends Controller
      */
     public function show(Request $request, Employee $employee)
     {
-        $employee_id=$employee['id'];
+        $employee_id = $employee['id'];
         $data = Employee::find($employee_id);
         return $data;
-
     }
     public function mostrar(Request $request, Employee $employee)
     {
-        $employee_id=$employee['id'];
+        $employee_id = $employee['id'];
         $data = Employee::find($employee_id);
         return view('show', compact('data'));
     }
@@ -118,7 +98,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $employee_id=$employee['id'];
+        $employee_id = $employee['id'];
         $employee = Employee::find($employee_id);
 
         return view('edit', compact('employee'));
@@ -156,12 +136,8 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         //
-        $employee_id=$employee['id'];
+        $employee_id = $employee['id'];
         $employee = Employee::find($employee_id)->delete();
         return redirect()->route('empleados')->with('success', 'Empleado borrado exitosamente.');
-
-
-
-
     }
 }
